@@ -1,0 +1,28 @@
+confluence:
+  image: dawidekc/confluence:6.10.1 
+  ports:
+    - "8086:8090"
+    - "8091:8091"
+  restart: always
+  volumes:
+    - /var/srv/docker/confluence/home:/var/atlassian/confluence
+    - /var/srv/docker/confluence/conf:/opt/atlassian/confluence/conf
+    - /var/srv/docker/confluence/logs:/opt/atlassian/confluence/logs
+  links:
+    - postgres:postgres
+  environment:
+    - X_PROXY_NAME=xxx.de
+    - X_PROXY_PORT=8888
+    - X_PROXY_SCHEME=https 
+    - X_PROXY_SECURE=true
+  
+postgres:
+  image: postgres:9.5.2
+  restart: always
+  environment:
+    - POSTGRES_USER=confluence
+    - POSTGRES_PASSWORD=confluence
+    - POSTGRES_DB=confluence
+    - PGDATA=/var/lib/postgresql/data/pgdata
+  volumes:
+    - /var/srv/docker/confluence/database:/var/lib/postgresql/data
