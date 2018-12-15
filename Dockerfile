@@ -1,4 +1,4 @@
-FROM anapsix/alpine-java:8_jdk
+FROM adoptopenjdk/openjdk8:x86_64-ubuntu-jdk8u192-b12
 
 # Setup useful environment variables
 ENV CONF_HOME     /var/atlassian/confluence
@@ -11,7 +11,7 @@ ENV CERTIFICATE   $CONF_HOME/certificate
 # Install Atlassian Confluence and helper tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apk --no-cache add curl xmlstarlet bash ttf-dejavu libc6-compat \
+    && apk --no-cache add curl xmlstarlet bash ttf-dejavu \
     && mkdir -p                "${CONF_HOME}" \
     && chmod -R 700            "${CONF_HOME}" \
     && chown daemon:daemon     "${CONF_HOME}" \
